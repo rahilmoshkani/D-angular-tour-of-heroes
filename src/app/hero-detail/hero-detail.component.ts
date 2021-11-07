@@ -7,6 +7,7 @@ import { HERO } from '../HERO';
   styleUrls: ['./hero-detail.component.scss']
 })
 export class HeroDetailComponent implements OnInit {
+  @Input()hero?:HERO;
 
   constructor() { }
 
