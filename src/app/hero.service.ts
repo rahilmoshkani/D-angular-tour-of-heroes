@@ -1,3 +1,4 @@
+import { HeroService } from './hero.service';
 import { HERO } from './hero';
 import { Injectable } from '@angular/core';
 import { HEROES } from './mock-heroes';
@@ -16,6 +17,12 @@ export class HeroService {
     this.messageservice.add('HeroService:fetched heroes');
     return heroes;
     
+  }
+  getHero(id:number):Observable<HERO>{
+  const hero=HEROES.find(h=>h.id===id)!;
+  this.messageservice.add(`HeroService:fetched hero id=${id}`);
+  return of(hero);
+
   }
 
   constructor(private messageservice:MessageService) { }
