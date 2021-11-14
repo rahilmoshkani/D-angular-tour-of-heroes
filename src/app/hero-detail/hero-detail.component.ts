@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./hero-detail.component.scss']
 })
 export class HeroDetailComponent implements OnInit {
-  @Input()hero?:HERO;
+  hero:HERO|undefined
 
   constructor(
     private route:ActivatedRoute,
@@ -25,7 +25,7 @@ export class HeroDetailComponent implements OnInit {
    
   getHero():void{
     const id=Number(this.route.snapshot.paramMap.get('id'));
-    this.heroservice.getheroes(id)
+    this.heroservice.getHero(id)
     .subscribe(hero=>this.hero=hero);
   }
 
