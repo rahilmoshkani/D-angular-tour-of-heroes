@@ -32,6 +32,6 @@ export class HeroService {
     this.messageservice.add(`HeroService:${message}`);
   }
   
-
+private heroesUrl='api/heroes';//url to web api 
 
 }
