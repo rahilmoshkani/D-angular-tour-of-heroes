@@ -16,9 +16,7 @@ export class HeroService {
   constructor(private messageservice:MessageService,private http:HttpClient) { }
 
   getheroes():Observable<HERO[]>{
-    const heroes=of(HEROES);
-    this.messageservice.add('HeroService:fetched heroes');
-    return heroes;
+    return this.http.get<HERO[]>(this.heroesUrl)
     
   }
   getHero(id:number):Observable<HERO>{
