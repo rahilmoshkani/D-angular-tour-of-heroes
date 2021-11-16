@@ -8,6 +8,14 @@ import { MessageService } from '../message.service';
   styleUrls: ['./heroes.component.scss']
 })
 export class HeroesComponent implements OnInit {
+  add(name:string):void{
+    name=name.trim();
+    if(!name){return;}
+    this.heroservice.addHero({name} as HERO)
+    .subscribe(hero=>{
+      this.heroes.push(hero);
+    });
+  }
  
  heroes:HERO[]=[];
 

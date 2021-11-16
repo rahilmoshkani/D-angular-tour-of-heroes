@@ -16,6 +16,15 @@ import {catchError,map,tap} from 'rxjs/operators';
 export class HeroService {
   constructor(private messageservice:MessageService,private http:HttpClient) { }
 
+  /**POST:add a new hero to the server */
+  addHero(hero:HERO):Observable<HERO>{
+    return this.http.post<HERO>(this.heroesUrl,hero,this.httpOptions)
+    .pipe(
+      tap((newHero:HERO)=>this.log(`added hero w/ id=${newHero.id}`)),
+      catchError(this.handleError<HERO>('addHero'))
+    );
+  }
+
   /**PUT:update the hero on the server */
   updateHero(hero:HERO):Observable<any>{
     return this.http.put(this.heroesUrl,hero, this.httpOptions)
