@@ -25,10 +25,13 @@ export class HeroService {
     );
     
   }
+  /*GET hero by id. will 404 if id not found*/
   getHero(id:number):Observable<HERO>{
-  const hero=HEROES.find(h=>h.id===id)!;
-  this.messageservice.add(`HeroService:fetched hero id=${id}`);
-  return of(hero);
+  const url=`${this.heroesUrl}/${id}`;
+  return this.http.get<HERO>(url).pipe(
+    tap(_=>this.log(`fetched hero id=${id}`)),
+    catchError(this.handleError<HERO>(`getHero id=${id}`))
+  );
 
   }
 
