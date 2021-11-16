@@ -16,6 +16,17 @@ import {catchError,map,tap} from 'rxjs/operators';
 export class HeroService {
   constructor(private messageservice:MessageService,private http:HttpClient) { }
 
+  /**DELETE:delete the hero from the server */
+  deleteHero(id:number):Observable<HERO>{
+    const url=`${this.heroesUrl}/${id}`;
+
+    return this.http.delete<HERO>(url,this.httpOptions)
+    .pipe(
+      tap(_=>this.log(`deleted hero id=${id}`)),
+      catchError(this.handleError<HERO>('deleteHero'))
+    );
+  }
+
   /**POST:add a new hero to the server */
   addHero(hero:HERO):Observable<HERO>{
     return this.http.post<HERO>(this.heroesUrl,hero,this.httpOptions)
