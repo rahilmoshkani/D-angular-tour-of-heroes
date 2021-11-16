@@ -16,6 +16,19 @@ import {catchError,map,tap} from 'rxjs/operators';
 export class HeroService {
   constructor(private messageservice:MessageService,private http:HttpClient) { }
 
+  /**PUT:update the hero on the server */
+  updateHero(hero:HERO):Observable<any>{
+    return this.http.put(this.heroesUrl,hero, this.httpOptions)
+    .pipe(
+      tap(_=>this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<any>('updateHero'))
+    );
+  }
+
+  httpOptions={
+    headers:new HttpHeaders({'content-type':'application/json'})
+  }
+
 /*GET heroes from the server*/
   getheroes():Observable<HERO[]>{
     return this.http.get<HERO[]>(this.heroesUrl)
