@@ -16,6 +16,21 @@ import {catchError,map,tap} from 'rxjs/operators';
 export class HeroService {
   constructor(private messageservice:MessageService,private http:HttpClient) { }
 
+  /*GET heroes whose name contans search term*/
+  searchHeroes(term:string):Observable<HERO[]>{
+    if (!term.trim()){
+      //if not search term,return empty hero array.
+      return of([]);
+    }
+    return this.http.get<HERO[]>(`${this.heroesUrl}/?name=${term}`)
+    .pipe(
+      tap(x=>x.length?
+        this.log(`found heroes matching "${term}"`):
+        this.log(`no heroes matching "${term}"`)),
+        catchError(this.handleError<HERO[]>('searchHeroes',[]))
+    );
+  }
+
   /**DELETE:delete the hero from the server */
   deleteHero(id:number):Observable<HERO>{
     const url=`${this.heroesUrl}/${id}`;
